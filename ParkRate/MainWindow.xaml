@@ -1,0 +1,21 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ParkRate"
+        xmlns:ViewModel="clr-namespace:ParkRate.ViewModel" x:Class="ParkRate.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.DataContext>
+        <ViewModel:ParkRateViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <TextBox Margin="106,10,337.4,0" TextWrapping="Wrap" Text="{Binding ArrivalTime, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalTimeTxt" />
+        <Label Content="ora di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
+        <TextBox Margin="106,42,337.4,0" TextWrapping="Wrap" Text="{Binding ArrivalDate, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalDateTxt"/>
+        <Label Content="giorno di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="91"/>
+        <Label Content="{Binding RateValue}" Margin="282,5,10.4,262.8" x:Name="RateValueLbl"/>
+
+    </Grid>
+</Window>

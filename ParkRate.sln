@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkRate", "ParkRate\ParkRate.csproj", "{0A66C142-3279-49B6-B5A9-D504C59DD4F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkRate.Tests", "ParkRate.Tests\ParkRate.Tests.csproj", "{7DB242C9-3C69-4CAB-B424-AA1C8B669FE8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A66C142-3279-49B6-B5A9-D504C59DD4F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A66C142-3279-49B6-B5A9-D504C59DD4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A66C142-3279-49B6-B5A9-D504C59DD4F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A66C142-3279-49B6-B5A9-D504C59DD4F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DB242C9-3C69-4CAB-B424-AA1C8B669FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DB242C9-3C69-4CAB-B424-AA1C8B669FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DB242C9-3C69-4CAB-B424-AA1C8B669FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DB242C9-3C69-4CAB-B424-AA1C8B669FE8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6555323A-D160-4D7B-94DC-BC945387C13B}
+	EndGlobalSection
+EndGlobal
