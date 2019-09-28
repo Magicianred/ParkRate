@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Bl\Rate.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\ParkRateViewModel.cs" />
     <Page Include="MainWindow.xaml">

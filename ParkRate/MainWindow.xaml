@@ -11,9 +11,9 @@
         <ViewModel:ParkRateViewModel/>
     </Window.DataContext>
     <Grid>
-        <TextBox Margin="106,10,337.4,0" TextWrapping="Wrap" Text="{Binding ArrivalTime, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalTimeTxt" />
+        <TextBox Margin="106,10,337.4,0" TextWrapping="Wrap" Text="{Binding ArrivalTimeStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalTimeTxt" />
         <Label Content="ora di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
-        <TextBox Margin="106,42,337.4,0" TextWrapping="Wrap" Text="{Binding ArrivalDate, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalDateTxt"/>
+        <TextBox Margin="106,42,337.4,0" TextWrapping="Wrap" Text="{Binding ArrivalDateStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalDateTxt"/>
         <Label Content="giorno di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="91"/>
         <Label Content="{Binding RateValue}" Margin="282,5,10.4,262.8" x:Name="RateValueLbl"/>
 

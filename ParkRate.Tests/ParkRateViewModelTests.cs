@@ -14,25 +14,27 @@ namespace ParkRate.Tests
         public void OutTime_Defaults_ToNow()
         {
             ParkRateViewModel viewModel = new ParkRateViewModel();
-            Assert.That(viewModel.OutTime, Is.EqualTo(DateTime.Now).Within(1).Seconds);
+            Assert.That(viewModel.OutTimeStr, Is.EqualTo(DateTime.Now.ToString("HHmm")));
+            Assert.That(viewModel.OutDateStr, Is.EqualTo(DateTime.Now.ToString("ddMMyyyy")));
         }
 
-        [Test]
-        public void Given_HourOfArrival_IExpect_ARateAmount()
+        [TestCase("26092019", "1230", "26092019", "1400", 0, Description = "up to 90 minutes later, no charge")]
+        [TestCase("26092019", "1230", "26092019", "1401", 3, Description = "91 minutes later, start paying")]
+        public void Given_HourOfArrival_IExpect_ARateAmount(
+            string arrivalDate,
+            string arrivalTime,
+            string outDate,
+            string outTime, 
+            decimal expectedRate)
         {
-            int day = 26;
-            int month = 9;
-            int year = 2019;
-            int hour = 12;
-            int minutes = 15;
             ParkRateViewModel viewModel = new ParkRateViewModel
             {
-                ArrivalDate = $"{day}{month}{year}",
-                ArrivalTime = $"{hour}{minutes}",
-                OutTime = new DateTime(year, month, day, hour + 1, minutes, 0)
+                ArrivalDateStr = arrivalDate,
+                ArrivalTimeStr = arrivalTime,
+                OutDateStr = outDate,
+                OutTimeStr = outTime
             };
 
-            decimal expectedRate = 0;
             Assert.AreEqual(expectedRate, viewModel.RateValue);
         }
 
