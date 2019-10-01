@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using ParkRate.Annotations;
 using ParkRate.Bl;
 
@@ -21,6 +22,7 @@ namespace ParkRate.ViewModel
         private decimal _rateValue;
         private string _outDateStr;
         private string _outTimeStr;
+        private Color _arrivalTimeColor;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ParkRateViewModel()
@@ -62,7 +64,17 @@ namespace ParkRate.ViewModel
 
         private decimal ComputeRateValue()
         {
-            DateTime arrivalTime = ParseDateTime(ArrivalDateStr, ArrivalTimeStr);
+            DateTime arrivalTime = DateTime.Now;
+            try
+            {
+                arrivalTime = ParseDateTime(ArrivalDateStr, ArrivalTimeStr);
+                ArrivalTimeColor = Colors.Black;
+            }
+            catch (FormatException e)
+            {
+                ArrivalTimeColor = Colors.Red;
+            }
+
             DateTime outTime = ParseDateTime(OutDateStr, OutTimeStr);
 
             Rate rate = new Rate();
@@ -103,6 +115,16 @@ namespace ParkRate.ViewModel
                 _outDateStr = value;
                 OnPropertyChanged(nameof(OutDateStr));
                 UpdateRateValue();
+            }
+        }
+
+        public Color ArrivalTimeColor
+        {
+            get => _arrivalTimeColor;
+            set
+            {
+                _arrivalTimeColor = value;
+                OnPropertyChanged(nameof(ArrivalTimeColor));
             }
         }
 

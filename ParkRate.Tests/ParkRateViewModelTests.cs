@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using NUnit.Framework;
 using ParkRate.ViewModel;
 
@@ -38,5 +40,25 @@ namespace ParkRate.Tests
             Assert.AreEqual(expectedRate, viewModel.RateValue);
         }
 
+        [Test]
+        public void GivenAString_AsTime_CouldNotBe_InTheRightFormat()
+        {
+            ParkRateViewModel viewModel = new ParkRateViewModel()
+            {
+                ArrivalTimeStr = "banana"
+            };
+            Assert.AreEqual(Colors.Red, viewModel.ArrivalTimeColor);
+            Assert.AreEqual(0, viewModel.RateValue);
+        }
+
+        [Test]
+        public void GivenAString_AsTime_IfItIs_InTheRightFormat_Then_NoErrorIsSignaled()
+        {
+            ParkRateViewModel viewModel = new ParkRateViewModel()
+            {
+                ArrivalTimeStr = "0615"
+            };
+            Assert.AreEqual(Colors.Black, viewModel.ArrivalTimeColor);
+        }
     }
 }

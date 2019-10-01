@@ -12,10 +12,12 @@
     </Window.DataContext>
     <Grid>
         <TextBox Margin="106,10,337.4,0" TextWrapping="Wrap" Text="{Binding ArrivalTimeStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalTimeTxt" />
-        <Label Content="ora di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
-        <TextBox Margin="106,42,337.4,0" TextWrapping="Wrap" Text="{Binding ArrivalDateStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalDateTxt"/>
-        <Label Content="giorno di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="91"/>
+        <Label Content="ora di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="23"/>
+        <TextBox Margin="106,85,337.4,0" TextWrapping="Wrap" Text="{Binding ArrivalDateStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalDateTxt"/>
+        <Label Content="giorno di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Width="91"/>
         <Label Content="{Binding RateValue}" Margin="282,5,10.4,262.8" x:Name="RateValueLbl"/>
+        <Label Content="Immettere l'ora in formato MMss, senza spazi" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="267"/>
+        <Label Content="Immettere il giorno in formato ggmmaaaa, senza spazi" HorizontalAlignment="Left" Margin="10,108,0,0" VerticalAlignment="Top" Width="301" Background="{Binding ArrivalTimeColor}"/>
 
     </Grid>
 </Window>
