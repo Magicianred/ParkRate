@@ -47,7 +47,7 @@ namespace ParkRate.Tests
             {
                 ArrivalTimeStr = "banana"
             };
-            Assert.AreEqual(Colors.Red, viewModel.ArrivalTimeColor);
+            Assert.AreEqual(Brushes.Red, viewModel.ArrivalTimeColor);
             Assert.AreEqual(0, viewModel.RateValue);
         }
 
@@ -58,7 +58,7 @@ namespace ParkRate.Tests
             {
                 ArrivalTimeStr = "0615"
             };
-            Assert.AreEqual(Colors.Black, viewModel.ArrivalTimeColor);
+            Assert.AreEqual(ParkRateViewModel.HelpColor, viewModel.ArrivalTimeColor);
         }
     }
 }

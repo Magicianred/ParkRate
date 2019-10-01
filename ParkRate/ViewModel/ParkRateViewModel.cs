@@ -22,8 +22,10 @@ namespace ParkRate.ViewModel
         private decimal _rateValue;
         private string _outDateStr;
         private string _outTimeStr;
-        private Color _arrivalTimeColor;
+        private Brush _arrivalTimeColor;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public static readonly Brush HelpColor = Brushes.DimGray;
 
         public ParkRateViewModel()
         {
@@ -33,6 +35,8 @@ namespace ParkRate.ViewModel
             _arrivalDateStr = now.ToString(DateFormat);
             _outTimeStr = _arrivalTimeStr;
             _outDateStr = _arrivalDateStr;
+
+            _arrivalTimeColor = HelpColor;
         }
 
         public String ArrivalTimeStr
@@ -64,26 +68,30 @@ namespace ParkRate.ViewModel
 
         private decimal ComputeRateValue()
         {
-            DateTime arrivalTime = DateTime.Now;
-            try
+            ArrivalTimeColor = HelpColor;
+            DateTime arrivalTime = ParseDateTime(ArrivalDateStr, ArrivalTimeStr)(() =>
             {
-                arrivalTime = ParseDateTime(ArrivalDateStr, ArrivalTimeStr);
-                ArrivalTimeColor = Colors.Black;
-            }
-            catch (FormatException e)
-            {
-                ArrivalTimeColor = Colors.Red;
-            }
+                ArrivalTimeColor = Brushes.Red;
+                return DateTime.Now;
+            });
 
-            DateTime outTime = ParseDateTime(OutDateStr, OutTimeStr);
+            DateTime outTime = ParseDateTime(OutDateStr, OutTimeStr)(() => DateTime.Now);
 
             Rate rate = new Rate();
             return rate.Calculate(arrivalTime, outTime);
         }
 
-        private DateTime ParseDateTime(string dateString, string timeString)
+        private Func<Func<DateTime>, DateTime> ParseDateTime(string dateString, string timeString)
         {
-            return DateTime.ParseExact($"{dateString}{timeString}", $"{DateFormat}{TimeFormat}", CultureInfo.CurrentCulture);
+            try
+            {
+                DateTime ouTime = DateTime.ParseExact($"{dateString}{timeString}", $"{DateFormat}{TimeFormat}", CultureInfo.CurrentCulture);
+                return (_) => ouTime;
+            }
+            catch (FormatException e)
+            {
+                return (orElseBranch) => orElseBranch();
+            }
         }
 
         public Decimal RateValue
@@ -118,7 +126,7 @@ namespace ParkRate.ViewModel
             }
         }
 
-        public Color ArrivalTimeColor
+        public Brush ArrivalTimeColor
         {
             get => _arrivalTimeColor;
             set
