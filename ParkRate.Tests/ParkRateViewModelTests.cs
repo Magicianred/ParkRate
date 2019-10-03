@@ -16,8 +16,8 @@ namespace ParkRate.Tests
         public void OutTime_Defaults_ToNow()
         {
             ParkRateViewModel viewModel = new ParkRateViewModel();
-            Assert.That(viewModel.OutTimeStr, Is.EqualTo(DateTime.Now.ToString("HHmm")));
-            Assert.That(viewModel.OutDateStr, Is.EqualTo(DateTime.Now.ToString("ddMMyyyy")));
+            Assert.That(viewModel.LeaveTimeStr, Is.EqualTo(DateTime.Now.ToString("HHmm")));
+            Assert.That(viewModel.LeaveDateStr, Is.EqualTo(DateTime.Now.ToString("ddMMyyyy")));
         }
 
         [TestCase("26092019", "1230", "26092019", "1359", 0, Description = "up to 90 minutes later, no charge")]
@@ -33,32 +33,78 @@ namespace ParkRate.Tests
             {
                 ArrivalDateStr = arrivalDate,
                 ArrivalTimeStr = arrivalTime,
-                OutDateStr = outDate,
-                OutTimeStr = outTime
+                LeaveDateStr = outDate,
+                LeaveTimeStr = outTime
             };
 
             Assert.AreEqual(expectedRate, viewModel.RateValue);
         }
 
         [Test]
-        public void GivenAString_AsTime_CouldNotBe_InTheRightFormat()
+        public void GivenAString_AsArrivalTime_CouldNotBe_InTheRightFormat()
         {
             ParkRateViewModel viewModel = new ParkRateViewModel()
             {
-                ArrivalTimeStr = "banana"
+                ArrivalTimeStr = "banana",
+                ArrivalDateStr = "12122019"
             };
             Assert.AreEqual(Brushes.Red, viewModel.ArrivalTimeColor);
             Assert.AreEqual(0, viewModel.RateValue);
         }
 
         [Test]
-        public void GivenAString_AsTime_IfItIs_InTheRightFormat_Then_NoErrorIsSignaled()
+        public void GivenAString_ArrivalTime_IGet_TheExpected_StringRepresentation()
+        {
+            ParkRateViewModel viewModel = new ParkRateViewModel
+            {
+                ArrivalTimeStr = "0615",
+                ArrivalDateStr = "12122019"
+            };
+            Assert.AreEqual("12/12/2019 06:15", viewModel.ArrivalDateTimeStr);
+        }
+
+        [Test]
+        public void GivenAString_LeaveTime_IGet_TheExpected_StringRepresentation()
         {
             ParkRateViewModel viewModel = new ParkRateViewModel()
             {
-                ArrivalTimeStr = "0615"
+                LeaveTimeStr = "0615",
+                LeaveDateStr = "12122019"
+            };
+            Assert.AreEqual("12/12/2019 06:15", viewModel.LeaveDateTimeStr);
+        }
+
+        [Test]
+        public void GivenAString_AsArrivalTime_IfItIs_InTheRightFormat_Then_NoErrorIsSignaled()
+        {
+            ParkRateViewModel viewModel = new ParkRateViewModel()
+            {
+                ArrivalTimeStr = "0615",
+                ArrivalDateStr = "12122019"
             };
             Assert.AreEqual(ParkRateViewModel.HelpColor, viewModel.ArrivalTimeColor);
+        }
+
+        [Test]
+        public void GivenAString_AsLeaveTime_CouldNotBe_InTheRightFormat()
+        {
+            ParkRateViewModel viewModel = new ParkRateViewModel()
+            {
+                LeaveTimeStr = "banana",
+                LeaveDateStr = "12122019"
+            };
+            Assert.AreEqual(Brushes.Red, viewModel.LeaveTimeColor);
+        }
+
+        [Test]
+        public void GivenAString_AsLeaveTime_IfItIs_InTheRightFormat_Then_NoErrorIsSignaled()
+        {
+            ParkRateViewModel viewModel = new ParkRateViewModel()
+            {
+                LeaveTimeStr = "0615",
+                LeaveDateStr = "12122019"
+            };
+            Assert.AreEqual(ParkRateViewModel.HelpColor, viewModel.LeaveTimeColor);
         }
     }
 }

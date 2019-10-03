@@ -11,13 +11,22 @@
         <ViewModel:ParkRateViewModel/>
     </Window.DataContext>
     <Grid>
-        <TextBox Margin="106,10,337.4,0" TextWrapping="Wrap" Text="{Binding ArrivalTimeStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalTimeTxt" />
-        <Label Content="ora di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="23"/>
-        <TextBox Margin="106,85,337.4,0" TextWrapping="Wrap" Text="{Binding ArrivalDateStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalDateTxt"/>
-        <Label Content="giorno di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Width="91"/>
-        <Label Content="{Binding RateValue}" Margin="282,5,10.4,262.8" x:Name="RateValueLbl"/>
+        <TextBox Margin="135,10,308.4,0" TextWrapping="Wrap" Text="{Binding ArrivalTimeStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalTimeTxt" />
+        <Label Content="ora di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="23" Width="111"/>
+        <TextBox Margin="135,85,308.4,0" TextWrapping="Wrap" Text="{Binding ArrivalDateStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalDateTxt"/>
+        <Label Content="giorno di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Width="111"/>
+        <Label Content="{Binding RateValue}" Margin="282,5,10.4,282.8" x:Name="RateValueLbl"/>
         <Label Content="Immettere l'ora in formato MMss, senza spazi" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="267" Foreground="{Binding ArrivalTimeColor}"/>
         <Label Content="Immettere il giorno in formato ggmmaaaa, senza spazi" Margin="10,108,168.4,0" VerticalAlignment="Top" Foreground="{Binding ArrivalTimeColor}" Background="White"/>
+
+        <TextBox Margin="135,158,308.4,0" TextWrapping="Wrap" Text="{Binding LeaveTimeStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="LeaveTimeTxt" />
+        <Label Content="ora di partenza" HorizontalAlignment="Left" Margin="10,153,0,0" VerticalAlignment="Top" Height="23" Width="111"/>
+        <TextBox Margin="135,233,308.4,0" TextWrapping="Wrap" Text="{Binding LeaveDateStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="LeaveDateTxt"/>
+        <Label Content="giorno di partenza" HorizontalAlignment="Left" Margin="10,228,0,0" VerticalAlignment="Top" Width="111"/>
+        <Label Content="Immettere l'ora in formato MMss, senza spazi" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="267" Foreground="{Binding LeaveTimeColor}"/>
+        <Label Content="Immettere il giorno in formato ggmmaaaa, senza spazi" Margin="10,256,168.4,0" VerticalAlignment="Top" Foreground="{Binding LeaveTimeColor}" Background="White"/>
+        <Label Content="{Binding ArrivalDateTimeStr}" HorizontalAlignment="Left" Margin="346,61,0,0" VerticalAlignment="Top" Height="27" Width="120"/>
+        <Label Content="{Binding LeaveDateTimeStr}" HorizontalAlignment="Left" Margin="346,210,0,0" VerticalAlignment="Top" Height="27" Width="120"/>
 
     </Grid>
 </Window>

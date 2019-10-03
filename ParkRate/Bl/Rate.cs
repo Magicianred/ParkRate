@@ -19,9 +19,9 @@ namespace ParkRate.Bl
             _considerAlsoTheSlackTime = considerAlsoTheSlackTime;
         }
 
-        public decimal Calculate(DateTime arrivalDateTime, DateTime outDateTime)
+        public decimal Calculate(DateTime arrivalDateTime, DateTime leaveDateTime)
         {
-            TimeSpan stayTime = outDateTime - arrivalDateTime;
+            TimeSpan stayTime = leaveDateTime - arrivalDateTime;
             int stayTimeTotalMinutes = (int)stayTime.TotalMinutes;
 
             decimal rateValue = CalculateByMinutes(stayTimeTotalMinutes);

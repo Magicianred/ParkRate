@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -14,29 +13,87 @@ namespace ParkRate.ViewModel
 {
     public class ParkRateViewModel : INotifyPropertyChanged
     {
-        private const string TimeFormat = "HHmm";
-        private const string DateFormat = "ddMMyyyy";
-
         private string _arrivalTimeStr;
         private string _arrivalDateStr;
         private decimal _rateValue;
-        private string _outDateStr;
-        private string _outTimeStr;
+        private string _leaveDateStr;
+        private string _leaveTimeStr;
         private Brush _arrivalTimeColor;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public static readonly Brush HelpColor = Brushes.DimGray;
+        private Brush _leaveTimeColor;
+        private readonly DateTimeParser _dateTimeParser;
+        private DateTime _arrivalDateTime;
+        private DateTime _leaveDateTime;
+        private string _leaveDateTimeStr;
+        private string _arrivalDateTimeStr;
 
         public ParkRateViewModel()
         {
             var now = DateTime.Now;
-            
-            _arrivalTimeStr = now.ToString(TimeFormat);
-            _arrivalDateStr = now.ToString(DateFormat);
-            _outTimeStr = _arrivalTimeStr;
-            _outDateStr = _arrivalDateStr;
+            PropertyChanged += (sender, args) => { UpdateFields(args); };
 
             _arrivalTimeColor = HelpColor;
+            _leaveTimeColor = HelpColor;
+            _dateTimeParser = new DateTimeParser();
+            
+            ArrivalTimeStr = now.ToString(DateTimeParser.TimeFormat);
+            ArrivalDateStr = now.ToString(DateTimeParser.DateFormat);
+            LeaveTimeStr = _arrivalTimeStr;
+            LeaveDateStr = _arrivalDateStr;
+        }
+
+        private void UpdateFields(PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(ArrivalDateTime))
+            {
+                ArrivalDateTimeStr = ArrivalDateTime.ToString("g");
+            }
+
+            if (args.PropertyName == nameof(LeaveDateTime))
+            {
+                LeaveDateTimeStr = LeaveDateTime.ToString("g");
+            }
+        }
+
+        public String ArrivalDateTimeStr
+        {
+            get => _arrivalDateTimeStr;
+            private set
+            {
+                _arrivalDateTimeStr = value;
+                OnPropertyChanged(nameof(ArrivalDateTimeStr));
+            }
+        }
+
+        public String LeaveDateTimeStr
+        {
+            get => _leaveDateTimeStr;
+            private set
+            {
+                _leaveDateTimeStr = value;
+                OnPropertyChanged(nameof(LeaveDateTimeStr));
+            }
+        }
+        public DateTime ArrivalDateTime
+        {
+            get => _arrivalDateTime;
+            private set
+            {
+                _arrivalDateTime = value;
+                OnPropertyChanged(nameof(ArrivalDateTime));
+            }
+        }
+
+        public DateTime LeaveDateTime
+        {
+            get => _leaveDateTime;
+            private set
+            {
+                _leaveDateTime = value;
+                OnPropertyChanged(nameof(LeaveDateTime));
+            }
         }
 
         public String ArrivalTimeStr
@@ -69,29 +126,21 @@ namespace ParkRate.ViewModel
         private decimal ComputeRateValue()
         {
             ArrivalTimeColor = HelpColor;
-            DateTime arrivalTime = ParseDateTime(ArrivalDateStr, ArrivalTimeStr)(() =>
+            ArrivalDateTime = _dateTimeParser.ParseDateTime(ArrivalDateStr, ArrivalTimeStr)(() =>
             {
                 ArrivalTimeColor = Brushes.Red;
                 return DateTime.Now;
             });
 
-            DateTime outTime = ParseDateTime(OutDateStr, OutTimeStr)(() => DateTime.Now);
+            LeaveTimeColor = HelpColor;
+            LeaveDateTime = _dateTimeParser.ParseDateTime(LeaveDateStr, LeaveTimeStr)(() =>
+            {
+                LeaveTimeColor = Brushes.Red;
+                return DateTime.Now;
+            });
 
             Rate rate = new Rate();
-            return rate.Calculate(arrivalTime, outTime);
-        }
-
-        private Func<Func<DateTime>, DateTime> ParseDateTime(string dateString, string timeString)
-        {
-            try
-            {
-                DateTime ouTime = DateTime.ParseExact($"{dateString}{timeString}", $"{DateFormat}{TimeFormat}", CultureInfo.CurrentCulture);
-                return (_) => ouTime;
-            }
-            catch (FormatException e)
-            {
-                return (orElseBranch) => orElseBranch();
-            }
+            return rate.Calculate(ArrivalDateTime, LeaveDateTime);
         }
 
         public Decimal RateValue
@@ -104,24 +153,24 @@ namespace ParkRate.ViewModel
             }
         }
 
-        public string OutTimeStr
+        public string LeaveTimeStr
         {
-            get => _outTimeStr;
+            get => _leaveTimeStr;
             set
             {
-                _outTimeStr = value;
-                OnPropertyChanged(nameof(OutTimeStr));
+                _leaveTimeStr = value;
+                OnPropertyChanged(nameof(LeaveTimeStr));
                 UpdateRateValue();
             }
         }
 
-        public string OutDateStr
+        public string LeaveDateStr
         {
-            get => _outDateStr;
+            get => _leaveDateStr;
             set
             {
-                _outDateStr = value;
-                OnPropertyChanged(nameof(OutDateStr));
+                _leaveDateStr = value;
+                OnPropertyChanged(nameof(LeaveDateStr));
                 UpdateRateValue();
             }
         }
@@ -133,6 +182,16 @@ namespace ParkRate.ViewModel
             {
                 _arrivalTimeColor = value;
                 OnPropertyChanged(nameof(ArrivalTimeColor));
+            }
+        }
+
+        public Brush LeaveTimeColor
+        {
+            get => _leaveTimeColor;
+            set
+            {
+                _leaveTimeColor = value;
+                OnPropertyChanged(nameof(LeaveTimeColor));
             }
         }
 
