@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows.Media;
 using ParkRate.Annotations;
 using ParkRate.Bl;
@@ -28,6 +30,7 @@ namespace ParkRate.ViewModel
         private DateTime _leaveDateTime;
         private string _leaveDateTimeStr;
         private string _arrivalDateTimeStr;
+        private List<RateExample> _exampleList;
 
         public ParkRateViewModel()
         {
@@ -42,6 +45,56 @@ namespace ParkRate.ViewModel
             ArrivalDateStr = now.ToString(DateTimeParser.DateFormat);
             LeaveTimeStr = _arrivalTimeStr;
             LeaveDateStr = _arrivalDateStr;
+
+            ComputeExamples();
+        }
+
+        private void ComputeExamples()
+        {
+            ExampleList = new List<RateExample>
+            {
+                new RateExample
+                {
+                    Title = "15 minuti",
+                    Value = RateToEuro(15),
+                },
+                new RateExample
+                {
+                    Title = "30 minuti",
+                    Value = RateToEuro(30),
+                },
+                new RateExample
+                {
+                    Title = "1 ora",
+                    Value = RateToEuro(60),
+                },
+                new RateExample
+                {
+                    Title = "89 minuti",
+                    Value = RateToEuro(89),
+                },
+                new RateExample
+                {
+                    Title = "90 minuti",
+                    Value = RateToEuro(90),
+                },
+                new RateExample
+                {
+                    Title = "2 ore",
+                    Value = RateToEuro(120),
+                },
+                new RateExample
+                {
+                    Title = "3 ore",
+                    Value = RateToEuro(180),
+                }
+            };
+        }
+
+        private static string RateToEuro(int stayTimeTotalMinutes)
+        {
+            Rate rate = new Rate();
+            return $"{rate.CalculateByMinutes(stayTimeTotalMinutes).ToString(CultureInfo.InvariantCulture)} Euro";
         }
 
         private void UpdateFields(PropertyChangedEventArgs args)
@@ -195,10 +248,26 @@ namespace ParkRate.ViewModel
             }
         }
 
+        public List<RateExample> ExampleList
+        {
+            get => _exampleList;
+            set
+            {
+                _exampleList = value;
+                OnPropertyChanged(nameof(ExampleList));
+            }
+        }
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+
+    public class RateExample
+    {
+        public String Title { get; set; }
+        public String Value { get; set; }
     }
 }
