@@ -11,17 +11,17 @@
         <ViewModel:ParkRateViewModel/>
     </Window.DataContext>
     <Grid>
-        <TextBox Margin="135,10,0,0" TextWrapping="Wrap" Text="{Binding ArrivalTimeStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalTimeTxt" HorizontalAlignment="Left" Width="65" />
+        <TextBox Margin="135,10,0,0" TextWrapping="Wrap" Text="{Binding ArrivalTimeStr, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" VerticalAlignment="Top" x:Name="ArrivalTimeTxt" HorizontalAlignment="Left" Width="65" Height="20"/>
         <Label Content="ora di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="23" Width="111"/>
-        <TextBox Margin="135,85,0,0" TextWrapping="Wrap" Text="{Binding ArrivalDateStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="ArrivalDateTxt" HorizontalAlignment="Left" Width="65"/>
+        <TextBox Margin="135,85,0,0" TextWrapping="Wrap" Text="{Binding ArrivalDateStr, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" VerticalAlignment="Top" x:Name="ArrivalDateTxt" HorizontalAlignment="Left" Width="65" Height="20"/>
         <Label Content="giorno di arrivo&#xA;" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Width="111"/>
         <Label Content="{Binding RateValue}" Margin="282,5,0,0" x:Name="RateValueLbl" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="92"/>
         <Label Content="Immettere l'ora in formato MMss, senza spazi" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="267" Foreground="{Binding ArrivalTimeColor}"/>
         <Label Content="Immettere il giorno in formato ggmmaaaa, senza spazi" Margin="10,108,168.4,0" VerticalAlignment="Top" Foreground="{Binding ArrivalTimeColor}" Background="White"/>
 
-        <TextBox Margin="135,158,0,0" TextWrapping="Wrap" Text="{Binding LeaveTimeStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="LeaveTimeTxt" HorizontalAlignment="Left" Width="65" />
-        <Label Content="ora di partenza" HorizontalAlignment="Left" Margin="10,153,0,0" VerticalAlignment="Top" Height="23" Width="111"/>
-        <TextBox Margin="135,233,0,0" TextWrapping="Wrap" Text="{Binding LeaveDateStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="LeaveDateTxt" HorizontalAlignment="Left" Width="65"/>
+        <TextBox Margin="135,158,0,0" TextWrapping="Wrap" Text="{Binding LeaveTimeStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" PreviewTextInput="ValidateContent" x:Name="LeaveTimeTxt" HorizontalAlignment="Left" Width="65" Height="20"/>
+        <Label Content="ora di partenza" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Height="26" Width="111"/>
+        <TextBox Margin="135,232,0,0" TextWrapping="Wrap" Text="{Binding LeaveDateStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="LeaveDateTxt" PreviewTextInput="ValidateContent" HorizontalAlignment="Left" Width="65" Height="20"/>
         <Label Content="giorno di partenza" HorizontalAlignment="Left" Margin="10,228,0,0" VerticalAlignment="Top" Width="111"/>
         <Label Content="Immettere l'ora in formato MMss, senza spazi" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="267" Foreground="{Binding LeaveTimeColor}"/>
         <Label Content="Immettere il giorno in formato ggmmaaaa, senza spazi" Margin="10,256,168.4,0" VerticalAlignment="Top" Foreground="{Binding LeaveTimeColor}" Background="White"/>
@@ -35,6 +35,27 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <GroupBox Header="Opzioni" HorizontalAlignment="Left" Height="152" Margin="10,299,0,0" VerticalAlignment="Top" Width="456">
+            <StackPanel>
+                <CheckBox Content="Paga anche la parte di sosta gratuita" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" IsChecked="{Binding PaySlackTime}"/>
+                <CheckBox Content="Paga in anticipo" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" IsChecked="{Binding PayInAdvance}"/>
+                <WrapPanel>
+                    <Label Width ="150px" Content="Tariffa oraria"></Label>
+                    <TextBox Width="50px" TextWrapping="Wrap" Text="{Binding PayAmountPerHour, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20"/>
+                    <Label Content="euro"></Label>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Width ="150px" Content="La Tariffa scatta ogni"></Label>
+                    <TextBox Width ="50px" TextWrapping="Wrap" Text="{Binding PayEveryMinutes, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20"/>
+                    <Label Content="minuti"></Label>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Width ="150px" Content="Tempo di sosta gratuito"></Label>
+                    <TextBox Width ="50px" TextWrapping="Wrap" Text="{Binding SlackTime, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20"/>
+                    <Label Content="minuti"></Label>
+                </WrapPanel>
+            </StackPanel>
+        </GroupBox>
 
     </Grid>
 </Window>

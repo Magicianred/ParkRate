@@ -15,9 +15,10 @@ namespace ParkRate.ViewModel
 {
     public class ParkRateViewModel : INotifyPropertyChanged
     {
+        private const string RateOptionProperty = "RateOption";
         private string _arrivalTimeStr;
         private string _arrivalDateStr;
-        private decimal _rateValue;
+        private string _rateValue;
         private string _leaveDateStr;
         private string _leaveTimeStr;
         private Brush _arrivalTimeColor;
@@ -31,6 +32,14 @@ namespace ParkRate.ViewModel
         private string _leaveDateTimeStr;
         private string _arrivalDateTimeStr;
         private List<RateExample> _exampleList;
+        private bool _paySlackTime;
+        private bool _payInAdvance;
+        private string _payEveryMinutesStr;
+        private string _payAmountPerHourStr;
+        private string _slackTimeStr;
+        private int _payEveryMinutes;
+        private decimal _payAmountPerHour;
+        private int _slackTime;
 
         public ParkRateViewModel()
         {
@@ -40,6 +49,12 @@ namespace ParkRate.ViewModel
             _arrivalTimeColor = HelpColor;
             _leaveTimeColor = HelpColor;
             _dateTimeParser = new DateTimeParser();
+
+            _paySlackTime = true;
+            _payInAdvance = true;
+            _payEveryMinutes = 15;
+            _payAmountPerHour = 3;
+            _slackTime = 90;
             
             ArrivalTimeStr = now.ToString(DateTimeParser.TimeFormat);
             ArrivalDateStr = now.ToString(DateTimeParser.DateFormat);
@@ -53,6 +68,11 @@ namespace ParkRate.ViewModel
         {
             ExampleList = new List<RateExample>
             {
+                new RateExample
+                {
+                    Title = "14 minuti",
+                    Value = RateToEuro(14),
+                },
                 new RateExample
                 {
                     Title = "15 minuti",
@@ -91,10 +111,20 @@ namespace ParkRate.ViewModel
             };
         }
 
-        private static string RateToEuro(int stayTimeTotalMinutes)
+        private string RateToEuro(int stayTimeTotalMinutes)
         {
-            Rate rate = new Rate();
-            return $"{rate.CalculateByMinutes(stayTimeTotalMinutes).ToString(CultureInfo.InvariantCulture)} Euro";
+            Rate rate = GetRate();
+            return $"{rate.CalculateByMinutes(stayTimeTotalMinutes):F2} Euro";
+        }
+
+        private Rate GetRate()
+        {
+            return new Rate(
+                PayEveryMinutes,
+                PayAmountPerHour,
+                SlackTime,
+                PaySlackTime,
+                PayInAdvance);
         }
 
         private void UpdateFields(PropertyChangedEventArgs args)
@@ -102,11 +132,20 @@ namespace ParkRate.ViewModel
             if (args.PropertyName == nameof(ArrivalDateTime))
             {
                 ArrivalDateTimeStr = ArrivalDateTime.ToString("g");
+                return;
             }
 
             if (args.PropertyName == nameof(LeaveDateTime))
             {
                 LeaveDateTimeStr = LeaveDateTime.ToString("g");
+                return;
+            }
+
+            if (args.PropertyName == RateOptionProperty)
+            {
+                ComputeExamples();
+                UpdateRateValue();
+                return;
             }
         }
 
@@ -173,7 +212,7 @@ namespace ParkRate.ViewModel
 
         private void UpdateRateValue()
         {
-            RateValue = ComputeRateValue();
+            RateValue = $"{ComputeRateValue():F2}";
         }
 
         private decimal ComputeRateValue()
@@ -192,11 +231,11 @@ namespace ParkRate.ViewModel
                 return DateTime.Now;
             });
 
-            Rate rate = new Rate();
+            Rate rate = GetRate();
             return rate.Calculate(ArrivalDateTime, LeaveDateTime);
         }
 
-        public Decimal RateValue
+        public String RateValue
         {
             get => _rateValue;
             private set
@@ -255,6 +294,91 @@ namespace ParkRate.ViewModel
             {
                 _exampleList = value;
                 OnPropertyChanged(nameof(ExampleList));
+            }
+        }
+
+        public bool PaySlackTime
+        {
+            get => _paySlackTime;
+            set
+            {
+                _paySlackTime = value;
+                OnPropertyChanged(nameof(PaySlackTime));
+                OnPropertyChanged(RateOptionProperty);
+            }
+        }
+
+        public bool PayInAdvance
+        {
+            get => _payInAdvance;
+            set
+            {
+                _payInAdvance = value;
+                OnPropertyChanged(nameof(PayInAdvance));
+                OnPropertyChanged(RateOptionProperty);
+            }
+        }
+
+        public string PayEveryMinutesStr
+        {
+            get => _payEveryMinutesStr;
+            set
+            {
+                _payEveryMinutesStr = value;
+                OnPropertyChanged(nameof(PayEveryMinutesStr));
+            }
+        }
+
+        public string PayAmountPerHourStr
+        {
+            get => _payAmountPerHourStr;
+            set
+            {
+                _payAmountPerHourStr = value;
+                OnPropertyChanged(nameof(PayAmountPerHourStr));
+            }
+        }
+
+        public string SlackTimeStr
+        {
+            get => _slackTimeStr;
+            set
+            {
+                _slackTimeStr = value;
+                OnPropertyChanged(nameof(SlackTimeStr));
+            }
+        }
+
+        public int PayEveryMinutes
+        {
+            get => _payEveryMinutes;
+            set
+            {
+                _payEveryMinutes = value;
+                OnPropertyChanged(nameof(PayEveryMinutes));
+                OnPropertyChanged(RateOptionProperty);
+            }
+        }
+
+        public decimal PayAmountPerHour
+        {
+            get => _payAmountPerHour;
+            set
+            {
+                _payAmountPerHour = value;
+                OnPropertyChanged(nameof(PayAmountPerHour));
+                OnPropertyChanged(RateOptionProperty);
+            }
+        }
+
+        public int SlackTime
+        {
+            get => _slackTime;
+            set
+            {
+                _slackTime = value;
+                OnPropertyChanged(nameof(SlackTime));
+                OnPropertyChanged(RateOptionProperty);
             }
         }
 
