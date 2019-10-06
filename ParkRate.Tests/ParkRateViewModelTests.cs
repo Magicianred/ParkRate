@@ -20,14 +20,14 @@ namespace ParkRate.Tests
             Assert.That(viewModel.LeaveDateStr, Is.EqualTo(DateTime.Now.ToString("ddMMyyyy")));
         }
 
-        [TestCase("26092019", "1230", "26092019", "1359", 0, Description = "up to 90 minutes later, no charge")]
-        [TestCase("26092019", "1230", "26092019", "1400", 4.5, Description = "91 minutes later, start paying")]
+        [TestCase("26092019", "1230", "26092019", "1359", "0.00", Description = "up to 90 minutes later, no charge")]
+        [TestCase("26092019", "1230", "26092019", "1400", "5.25", Description = "91 minutes later, start paying")]
         public void Given_HourOfArrival_IExpect_ARateAmount(
             string arrivalDate,
             string arrivalTime,
             string outDate,
             string outTime, 
-            decimal expectedRate)
+            string expectedRate)
         {
             ParkRateViewModel viewModel = new ParkRateViewModel
             {
@@ -41,6 +41,18 @@ namespace ParkRate.Tests
         }
 
         [Test]
+        public void OnInit_Arrival_IsSetToNow_AndLeave_IsSetTo_NowMinusSlackTime()
+        {
+            ParkRateViewModel viewModel = new ParkRateViewModel();
+            DateTime expectedDefaultLeave = DateTime.Now;
+            expectedDefaultLeave = new DateTime(expectedDefaultLeave.Year, expectedDefaultLeave.Month, expectedDefaultLeave.Day, expectedDefaultLeave.Hour, expectedDefaultLeave.Minute, 0);
+            DateTime expectedDefaultArrival = expectedDefaultLeave - TimeSpan.FromMinutes(viewModel.SlackTime);
+
+            Assert.That(viewModel.ArrivalDateTime, Is.EqualTo(expectedDefaultArrival).Within(TimeSpan.FromSeconds(2)), "Arrival Time");
+            Assert.That(viewModel.LeaveDateTime, Is.EqualTo(expectedDefaultLeave).Within(TimeSpan.FromSeconds(2)), "Leave Time");
+        }
+
+        [Test]
         public void GivenAString_AsArrivalTime_CouldNotBe_InTheRightFormat()
         {
             ParkRateViewModel viewModel = new ParkRateViewModel()
@@ -49,7 +61,7 @@ namespace ParkRate.Tests
                 ArrivalDateStr = "12122019"
             };
             Assert.AreEqual(Brushes.Red, viewModel.ArrivalTimeColor);
-            Assert.AreEqual(0, viewModel.RateValue);
+            Assert.AreEqual("0.00", viewModel.RateValue);
         }
 
         [Test]

@@ -56,10 +56,10 @@ namespace ParkRate.ViewModel
             _payAmountPerHour = 3;
             _slackTime = 90;
             
-            ArrivalTimeStr = now.ToString(DateTimeParser.TimeFormat);
-            ArrivalDateStr = now.ToString(DateTimeParser.DateFormat);
-            LeaveTimeStr = _arrivalTimeStr;
-            LeaveDateStr = _arrivalDateStr;
+            LeaveTimeStr = now.ToString(DateTimeParser.TimeFormat);
+            LeaveDateStr = now.ToString(DateTimeParser.DateFormat);
+            ArrivalTimeStr = (now - TimeSpan.FromMinutes(_slackTime)).ToString(DateTimeParser.TimeFormat);
+            ArrivalDateStr = _leaveDateStr;
 
             ComputeExamples();
         }
