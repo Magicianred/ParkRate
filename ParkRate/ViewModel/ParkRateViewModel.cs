@@ -319,42 +319,12 @@ namespace ParkRate.ViewModel
             }
         }
 
-        public string PayEveryMinutesStr
-        {
-            get => _payEveryMinutesStr;
-            set
-            {
-                _payEveryMinutesStr = value;
-                OnPropertyChanged(nameof(PayEveryMinutesStr));
-            }
-        }
-
-        public string PayAmountPerHourStr
-        {
-            get => _payAmountPerHourStr;
-            set
-            {
-                _payAmountPerHourStr = value;
-                OnPropertyChanged(nameof(PayAmountPerHourStr));
-            }
-        }
-
-        public string SlackTimeStr
-        {
-            get => _slackTimeStr;
-            set
-            {
-                _slackTimeStr = value;
-                OnPropertyChanged(nameof(SlackTimeStr));
-            }
-        }
-
         public int PayEveryMinutes
         {
             get => _payEveryMinutes;
             set
             {
-                _payEveryMinutes = value;
+                _payEveryMinutes = Math.Max(value, 1);
                 OnPropertyChanged(nameof(PayEveryMinutes));
                 OnPropertyChanged(RateOptionProperty);
             }
@@ -365,7 +335,7 @@ namespace ParkRate.ViewModel
             get => _payAmountPerHour;
             set
             {
-                _payAmountPerHour = value;
+                _payAmountPerHour = Math.Max(value, 0);
                 OnPropertyChanged(nameof(PayAmountPerHour));
                 OnPropertyChanged(RateOptionProperty);
             }
@@ -376,7 +346,7 @@ namespace ParkRate.ViewModel
             get => _slackTime;
             set
             {
-                _slackTime = value;
+                _slackTime = Math.Max(value, 0);
                 OnPropertyChanged(nameof(SlackTime));
                 OnPropertyChanged(RateOptionProperty);
             }

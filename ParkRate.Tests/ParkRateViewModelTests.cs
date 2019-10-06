@@ -65,6 +65,20 @@ namespace ParkRate.Tests
         }
 
         [Test]
+        public void CantSet_Negative_OrInvalidValues_InOptions()
+        {
+            ParkRateViewModel viewModel = new ParkRateViewModel()
+            {
+                SlackTime = -1,
+                PayEveryMinutes = 0,
+                PayAmountPerHour = -1
+            };
+            Assert.AreEqual(viewModel.SlackTime, 0);
+            Assert.AreEqual(viewModel.PayEveryMinutes, 1);
+            Assert.AreEqual(viewModel.PayAmountPerHour, 0);
+        }
+
+        [Test]
         public void GivenAString_ArrivalTime_IGet_TheExpected_StringRepresentation()
         {
             ParkRateViewModel viewModel = new ParkRateViewModel
