@@ -41,17 +41,17 @@
                 <CheckBox Content="Paga in anticipo" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" IsChecked="{Binding PayInAdvance}"/>
                 <WrapPanel>
                     <Label Width ="150px" Content="Tariffa oraria"></Label>
-                    <TextBox Width="50px" TextWrapping="Wrap" Text="{Binding PayAmountPerHour, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20"/>
+                    <TextBox Width="50px" TextWrapping="Wrap" Text="{Binding PayAmountPerHour, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20" GotFocus="SelectOnFocus" GotMouseCapture="SelectOnFocus"/>
                     <Label Content="euro"></Label>
                 </WrapPanel>
                 <WrapPanel>
                     <Label Width ="150px" Content="La Tariffa scatta ogni"></Label>
-                    <TextBox Width ="50px" TextWrapping="Wrap" Text="{Binding PayEveryMinutes, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20"/>
+                    <TextBox Width ="50px" TextWrapping="Wrap" Text="{Binding PayEveryMinutes, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20" GotFocus="SelectOnFocus" GotMouseCapture="SelectOnFocus"/>
                     <Label Content="minuti"></Label>
                 </WrapPanel>
                 <WrapPanel>
                     <Label Width ="150px" Content="Tempo di sosta gratuito"></Label>
-                    <TextBox Width ="50px" TextWrapping="Wrap" Text="{Binding SlackTime, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20"/>
+                    <TextBox Width ="50px" TextWrapping="Wrap" Text="{Binding SlackTime, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20" GotFocus="SelectOnFocus" GotMouseCapture="SelectOnFocus"/>
                     <Label Content="minuti"></Label>
                 </WrapPanel>
             </StackPanel>

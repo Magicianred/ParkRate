@@ -31,5 +31,12 @@ namespace ParkRate
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
+        private void SelectOnFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = ((TextBox)sender);
+            textBox.SelectionStart = 0;
+            textBox.SelectionLength = textBox.Text.Length;
+        }
     }
 }
