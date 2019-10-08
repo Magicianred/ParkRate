@@ -38,5 +38,11 @@ namespace ParkRate
             textBox.SelectionStart = 0;
             textBox.SelectionLength = textBox.Text.Length;
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ArrivalTimeTxt.Focus();
+            ArrivalTimeTxt.CaretIndex = ArrivalTimeTxt.Text.Length;
+        }
     }
 }

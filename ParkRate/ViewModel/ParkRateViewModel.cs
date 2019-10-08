@@ -212,7 +212,7 @@ namespace ParkRate.ViewModel
 
         private void UpdateRateValue()
         {
-            RateValue = $"{ComputeRateValue():F2}";
+            RateValue = $"€ {ComputeRateValue():F2}";
         }
 
         private decimal ComputeRateValue()

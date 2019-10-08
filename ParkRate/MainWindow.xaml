@@ -6,38 +6,33 @@
         xmlns:local="clr-namespace:ParkRate"
         xmlns:ViewModel="clr-namespace:ParkRate.ViewModel" x:Class="ParkRate.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="512.59" Width="693.171">
+        Title="Calcolo tariffa del parcheggio" Height="420.59" Width="638.771" Loaded="Window_Loaded">
     <Window.DataContext>
         <ViewModel:ParkRateViewModel/>
     </Window.DataContext>
     <Grid>
-        <Label Content="{Binding RateValue}" Margin="346,112,0,0" x:Name="RateValueLbl" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Expander Header="Ora di arrivo" HorizontalAlignment="Left" Width="456" Height="125" VerticalAlignment="Bottom" Margin="0,0,0,201.2">
-            <Canvas Height="92" Margin="10,0,-1.6,0">
-                <Border HorizontalAlignment="Right" Height="92" Width="446" >
-                    <Grid>
-                        <TextBox Margin="81,7,0,0" TextWrapping="Wrap"
-                            Text="{Binding ArrivalTimeStr, UpdateSourceTrigger=PropertyChanged}"
-                            PreviewTextInput="ValidateContent" VerticalAlignment="Top" x:Name="ArrivalTimeTxt"
-                            HorizontalAlignment="Left" Width="65" Height="Auto" />
-                        <Label Content="ora di arrivo" HorizontalAlignment="Left" VerticalAlignment="Top" Height="Auto"
-                            Width="Auto" Margin="2,3,0,0" />
-                        <TextBox TextWrapping="Wrap"
-                            Text="{Binding ArrivalDateStr, UpdateSourceTrigger=PropertyChanged}"
-                            PreviewTextInput="ValidateContent" VerticalAlignment="Top" x:Name="ArrivalDateTxt"
-                            HorizontalAlignment="Left" Width="65" Height="Auto" Margin="247,7,0,0" />
-                        <Label Content="giorno di arrivo" HorizontalAlignment="Left"
-                            VerticalAlignment="Top" Width="Auto" Margin="156,3,0,0" Height="Auto" />
-                        <Label Content="formato MMss, senza spazi" HorizontalAlignment="Left"
-                            VerticalAlignment="Top" Width="Auto" Height="Auto" Foreground="{Binding ArrivalTimeColor}" Margin="2,25,0,0" />
-                        <Label Content="formato ggmmaaaa, senza spazi" Width="Auto" Height="Auto"
-                            VerticalAlignment="Top" Foreground="{Binding ArrivalTimeColor}" Background="White" Margin="157,25,0,0" HorizontalAlignment="Left" />
-                    </Grid>
-                </Border>
-            </Canvas>
+        <Expander Header="Arrivo" HorizontalAlignment="Left" Width="363" Height="90" VerticalAlignment="Top" Margin="14,18,0,0" IsExpanded="True">
+            <Grid>
+                <TextBox Margin="80,6,0,0" TextWrapping="Wrap"
+                    Text="{Binding ArrivalTimeStr, UpdateSourceTrigger=PropertyChanged}"
+                    PreviewTextInput="ValidateContent" VerticalAlignment="Top" x:Name="ArrivalTimeTxt"
+                    HorizontalAlignment="Left" Width="65" Height="Auto" FontSize="20" />
+                <Label Content="ora di arrivo" HorizontalAlignment="Left" VerticalAlignment="Top" Height="Auto"
+                    Width="Auto" Margin="2,6,0,0" Foreground="#FF4057D0" />
+                <TextBox TextWrapping="Wrap"
+                    Text="{Binding ArrivalDateStr, UpdateSourceTrigger=PropertyChanged}"
+                    PreviewTextInput="ValidateContent" VerticalAlignment="Top" x:Name="ArrivalDateTxt"
+                    HorizontalAlignment="Left" Width="105" Height="Auto" Margin="247,6,0,0" FontSize="20" />
+                <Label Content="giorno di arrivo" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" Width="Auto" Margin="156,6,0,0" Height="Auto" Foreground="#FF4057D0" />
+                <Label Content="formato MMss, senza spazi" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" Width="Auto" Height="Auto" Foreground="{Binding ArrivalTimeColor}" Margin="2,35,0,-1.8" />
+                <Label Content="formato ggmmaaaa, senza spazi" Width="Auto" Height="Auto"
+                    VerticalAlignment="Top" Foreground="{Binding ArrivalTimeColor}" Background="White" Margin="157,35,0,-1.8" HorizontalAlignment="Left" />
+            </Grid>
         </Expander>
 
-        <ListView ItemsSource="{Binding ExampleList}" HorizontalAlignment="Left" Height="272" Margin="471,10,0,0" VerticalAlignment="Top" Width="161">
+        <ListView ItemsSource="{Binding ExampleList}" HorizontalAlignment="Left" Height="202" Margin="382,29,0,0" VerticalAlignment="Top" Width="169" Grid.ColumnSpan="3">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Tempo di sosta" DisplayMemberBinding="{Binding Title}"></GridViewColumn>
@@ -45,36 +40,55 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Expander Header="Opzioni" HorizontalAlignment="Left" Margin="10,299,0,32.2" Width="456">
+        <Expander Header="Opzioni" HorizontalAlignment="Left" Margin="14,220,0,-18.4" Width="363" IsExpanded="False" Height="160" VerticalAlignment="Top" Foreground="Black">
             <StackPanel>
-                <CheckBox Content="Paga anche la parte di sosta gratuita" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" IsChecked="{Binding PaySlackTime}"/>
-                <CheckBox Content="Paga in anticipo" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" IsChecked="{Binding PayInAdvance}"/>
+                <CheckBox Content="Paga anche la parte di sosta gratuita" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" IsChecked="{Binding PaySlackTime}" Foreground="#FF4057D0"/>
+                <CheckBox Content="Paga in anticipo" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" IsChecked="{Binding PayInAdvance}" Foreground="#FF4057D0"/>
                 <WrapPanel>
-                    <Label Width ="150px" Content="Tariffa oraria"></Label>
+                    <Label Width ="150px" Content="Tariffa oraria" Foreground="#FF4057D0"></Label>
                     <TextBox Width="50px" TextWrapping="Wrap" Text="{Binding PayAmountPerHour, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20" GotFocus="SelectOnFocus" GotMouseCapture="SelectOnFocus"/>
                     <Label Content="euro"></Label>
                 </WrapPanel>
                 <WrapPanel>
-                    <Label Width ="150px" Content="La Tariffa scatta ogni"></Label>
+                    <Label Width ="150px" Content="La Tariffa scatta ogni" Foreground="#FF4057D0"></Label>
                     <TextBox Width ="50px" TextWrapping="Wrap" Text="{Binding PayEveryMinutes, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20" GotFocus="SelectOnFocus" GotMouseCapture="SelectOnFocus"/>
                     <Label Content="minuti"></Label>
                 </WrapPanel>
                 <WrapPanel>
-                    <Label Width ="150px" Content="Tempo di sosta gratuito"></Label>
+                    <Label Width ="150px" Content="Tempo di sosta gratuito" Foreground="#FF4057D0"></Label>
                     <TextBox Width ="50px" TextWrapping="Wrap" Text="{Binding SlackTime, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20" GotFocus="SelectOnFocus" GotMouseCapture="SelectOnFocus"/>
                     <Label Content="minuti"></Label>
                 </WrapPanel>
             </StackPanel>
         </Expander>
-        <TextBox Height="Auto" Margin="105,17,0,0" TextWrapping="Wrap" Text="{Binding LeaveTimeStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" PreviewTextInput="ValidateContent" x:Name="LeaveTimeTxt" HorizontalAlignment="Left" Width="65"/>
-        <TextBox Height="Auto" Margin="135,88,0,0" TextWrapping="Wrap" Text="{Binding LeaveDateStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" x:Name="LeaveDateTxt" PreviewTextInput="ValidateContent" HorizontalAlignment="Left" Width="65"/>
-        <Label Height="Auto" Width="Auto" Content="ora di partenza" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top"/>
-        <Label Height="Auto" Width="Auto" Content="giorno di partenza" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" />
-        <Label Height="Auto" Width="Auto" Content="formato MMss, senza spazi" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Foreground="{Binding LeaveTimeColor}"/>
-        <Label Height="Auto" Width="Auto" Content="ggmmaaaa, senza spazi" Margin="15,112,340.4,0" VerticalAlignment="Top" Foreground="{Binding LeaveTimeColor}" Background="White"/>
-        <Label Height="Auto" Width="Auto" Content="{Binding LeaveDateTimeStr}" HorizontalAlignment="Left" Margin="346,66,0,0" VerticalAlignment="Top"/>
+        <Expander Header="Partenza" IsExpanded="False" HorizontalAlignment="Left" Width="363" Height="82" Margin="14,133,0,0" VerticalAlignment="Top">
+            <Grid>
+                <TextBox Height="Auto" Margin="95,6,0,0" TextWrapping="Wrap"
+                         Text="{Binding LeaveTimeStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"
+                         PreviewTextInput="ValidateContent" x:Name="LeaveTimeTxt" HorizontalAlignment="Left" Width="65" />
+                <TextBox Height="Auto" Margin="277,6,0,0" TextWrapping="Wrap"
+                         Text="{Binding LeaveDateStr, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"
+                         x:Name="LeaveDateTxt" PreviewTextInput="ValidateContent" HorizontalAlignment="Left" Width="69" />
+                <Label Height="Auto" Width="Auto" Content="ora di partenza" HorizontalAlignment="Left"
+                       VerticalAlignment="Top" Foreground="#FF4057D0" />
+                <Label Height="Auto" Width="Auto" Content="giorno di partenza" HorizontalAlignment="Left"
+                       Margin="165,0,0,0" VerticalAlignment="Top" Foreground="#FF4057D0" />
+                <Label Height="Auto" Width="Auto" Content="formato MMss, senza spazi" HorizontalAlignment="Left"
+                       Margin="0,26,0,0" VerticalAlignment="Top" Foreground="{Binding LeaveTimeColor}" />
+                <Label Height="Auto" Width="Auto" Content="formato ggmmaaaa, senza spazi" Margin="165,26,0,0"
+                       VerticalAlignment="Top" Foreground="{Binding LeaveTimeColor}" Background="White"
+                       HorizontalAlignment="Left" />
+            </Grid>
+        </Expander>
+        <Label Height="Auto" Width="Auto" Content="{Binding LeaveDateTimeStr}" HorizontalAlignment="Left" Margin="98,123,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.439,0.047" FontSize="20" FontWeight="Bold"/>
         <Label Height="Auto" Width="Auto" Content="{Binding ArrivalDateTimeStr}" HorizontalAlignment="Left"
-            VerticalAlignment="Top" Margin="336,155,0,0" />
+            VerticalAlignment="Top" Margin="98,8,0,0" FontSize="20" FontWeight="Bold" RenderTransformOrigin="0.478,1.038" />
+        <Border Grid.ColumnSpan="3" Margin="382,255,81,32.2" BorderThickness="1" BorderBrush="Gray">
+            <Grid>
+                <Label Content="{Binding RateValue}" Margin="0,30,-0.4,0" x:Name="RateValueLbl" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="48" Width="Auto"/>
+                <Label Content="Da Pagare" HorizontalAlignment="Left" Margin="0,0,-0.4,0" VerticalAlignment="Top" Width="138" FontSize="20" Foreground="#FF4057D0"/>
+            </Grid>
+        </Border>
 
     </Grid>
 </Window>
