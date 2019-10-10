@@ -20,8 +20,8 @@ namespace ParkRate.Tests
             Assert.That(viewModel.LeaveDateStr, Is.EqualTo(DateTime.Now.ToString("ddMMyyyy")));
         }
 
-        [TestCase("26092019", "1230", "26092019", "1359", "0.00", Description = "up to 90 minutes later, no charge")]
-        [TestCase("26092019", "1230", "26092019", "1400", "5.25", Description = "91 minutes later, start paying")]
+        [TestCase("26092019", "1230", "26092019", "1359", "€ 0.00", Description = "up to 90 minutes later, no charge")]
+        [TestCase("26092019", "1230", "26092019", "1400", "€ 5.25", Description = "91 minutes later, start paying")]
         public void Given_HourOfArrival_IExpect_ARateAmount(
             string arrivalDate,
             string arrivalTime,
@@ -61,7 +61,7 @@ namespace ParkRate.Tests
                 ArrivalDateStr = "12122019"
             };
             Assert.AreEqual(Brushes.Red, viewModel.ArrivalTimeColor);
-            Assert.AreEqual("0.00", viewModel.RateValue);
+            Assert.AreEqual("€ 0.00", viewModel.RateValue);
         }
 
         [Test]

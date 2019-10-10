@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ParkRate.ViewModel;
 
 namespace ParkRate
 {
@@ -43,6 +45,14 @@ namespace ParkRate
         {
             ArrivalTimeTxt.Focus();
             ArrivalTimeTxt.CaretIndex = ArrivalTimeTxt.Text.Length;
+
+            const string configFilePath = @"config.xml";
+            ParkRateViewModel viewModel = (ParkRateViewModel) DataContext;
+            viewModel.ConfigFilePath = configFilePath;
+            if (File.Exists(configFilePath))
+            {
+                viewModel.UpdateWithConfig(ParkRateConfig.FromXml(viewModel.ConfigFilePath));
+            }
         }
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="Bl\DateTimeParser.cs" />
     <Compile Include="Bl\Rate.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModel\ParkRateConfig.cs" />
     <Compile Include="ViewModel\ParkRateViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -15,7 +15,9 @@ namespace ParkRate.ViewModel
 {
     public class ParkRateViewModel : INotifyPropertyChanged
     {
+        private readonly ParkRateConfig _config;
         private const string RateOptionProperty = "RateOption";
+        private const string RateOptionPropertyUpdatedByConfig = "RateOptionPropertyUpdatedByConfig";
         private string _arrivalTimeStr;
         private string _arrivalDateStr;
         private string _rateValue;
@@ -40,9 +42,14 @@ namespace ParkRate.ViewModel
         private int _payEveryMinutes;
         private decimal _payAmountPerHour;
         private int _slackTime;
+        public string ConfigFilePath;
 
-        public ParkRateViewModel()
+        public ParkRateViewModel() : this(new ParkRateConfig())
+        {}
+
+        public ParkRateViewModel(ParkRateConfig config)
         {
+            _config = config;
             var now = DateTime.Now;
             PropertyChanged += (sender, args) => { UpdateFields(args); };
 
@@ -50,18 +57,27 @@ namespace ParkRate.ViewModel
             _leaveTimeColor = HelpColor;
             _dateTimeParser = new DateTimeParser();
 
-            _paySlackTime = true;
-            _payInAdvance = true;
-            _payEveryMinutes = 15;
-            _payAmountPerHour = 3;
-            _slackTime = 90;
-            
+            _paySlackTime = config.PaySlackTime;
+            _payInAdvance = config.PayInAdvance;
+            _payEveryMinutes = config.PayEveryMinutes;
+            _payAmountPerHour = config.PayAmountPerHour;
+            _slackTime = config.SlackTime;
+
             LeaveTimeStr = now.ToString(DateTimeParser.TimeFormat);
             LeaveDateStr = now.ToString(DateTimeParser.DateFormat);
             ArrivalTimeStr = (now - TimeSpan.FromMinutes(_slackTime)).ToString(DateTimeParser.TimeFormat);
             ArrivalDateStr = _leaveDateStr;
 
             ComputeExamples();
+        }
+
+        public void UpdateWithConfig(ParkRateConfig config)
+        {
+            PaySlackTime = config.PaySlackTime;
+            PayInAdvance = config.PayInAdvance;
+            PayEveryMinutes = config.PayEveryMinutes;
+            PayAmountPerHour = config.PayAmountPerHour;
+            SlackTime = config.SlackTime;
         }
 
         private void ComputeExamples()
@@ -143,9 +159,28 @@ namespace ParkRate.ViewModel
 
             if (args.PropertyName == RateOptionProperty)
             {
-                ComputeExamples();
-                UpdateRateValue();
+                SaveConfig();
+                UpdateUi();
                 return;
+            }
+        }
+
+        private void UpdateUi()
+        {
+            ComputeExamples();
+            UpdateRateValue();
+        }
+
+        private void SaveConfig()
+        {
+            if (ConfigFilePath != null)
+            {
+                _config.SlackTime = SlackTime;
+                _config.PaySlackTime = PaySlackTime;
+                _config.PayAmountPerHour = PayAmountPerHour;
+                _config.PayEveryMinutes = PayEveryMinutes;
+                _config.PayInAdvance = PayInAdvance;
+               _config.ToXml(ConfigFilePath);
             }
         }
 
