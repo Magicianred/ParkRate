@@ -65,10 +65,15 @@ namespace ParkRate.ViewModel
 
             LeaveTimeStr = now.ToString(DateTimeParser.TimeFormat);
             LeaveDateStr = now.ToString(DateTimeParser.DateFormat);
-            ArrivalTimeStr = (now - TimeSpan.FromMinutes(_slackTime)).ToString(DateTimeParser.TimeFormat);
+            ArrivalTimeStr = ComputeArrivalTime(now);
             ArrivalDateStr = _leaveDateStr;
 
             ComputeExamples();
+        }
+
+        private string ComputeArrivalTime(DateTime now)
+        {
+            return (now - TimeSpan.FromMinutes(SlackTime)).ToString(DateTimeParser.TimeFormat);
         }
 
         public void UpdateWithConfig(ParkRateConfig config)
@@ -78,6 +83,7 @@ namespace ParkRate.ViewModel
             PayEveryMinutes = config.PayEveryMinutes;
             PayAmountPerHour = config.PayAmountPerHour;
             SlackTime = config.SlackTime;
+            ArrivalTimeStr = ComputeArrivalTime(DateTime.Now);
         }
 
         private void ComputeExamples()
@@ -86,43 +92,43 @@ namespace ParkRate.ViewModel
             {
                 new RateExample
                 {
-                    Title = "14 minuti",
+                    Title = "Fino a 15 minuti",
                     Value = RateToEuro(14),
                 },
                 new RateExample
                 {
-                    Title = "15 minuti",
+                    Title = "da 15 minuti",
                     Value = RateToEuro(15),
                 },
                 new RateExample
                 {
-                    Title = "30 minuti",
-                    Value = RateToEuro(30),
+                    Title = "fino a 30 minuti",
+                    Value = RateToEuro(29),
                 },
                 new RateExample
                 {
-                    Title = "1 ora",
-                    Value = RateToEuro(60),
+                    Title = "fino a 1 ora",
+                    Value = RateToEuro(59),
                 },
                 new RateExample
                 {
-                    Title = "89 minuti",
+                    Title = "fino a 90 minuti",
                     Value = RateToEuro(89),
                 },
                 new RateExample
                 {
-                    Title = "90 minuti",
+                    Title = "da 90 minuti",
                     Value = RateToEuro(90),
                 },
                 new RateExample
                 {
-                    Title = "2 ore",
-                    Value = RateToEuro(120),
+                    Title = "fino a 2 ore",
+                    Value = RateToEuro(119),
                 },
                 new RateExample
                 {
-                    Title = "3 ore",
-                    Value = RateToEuro(180),
+                    Title = "fino a 3 ore",
+                    Value = RateToEuro(179),
                 }
             };
         }

@@ -83,8 +83,8 @@
         <Label Height="Auto" Width="Auto" Content="{Binding LeaveDateTimeStr}" HorizontalAlignment="Left" Margin="98,123,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.439,0.047" FontSize="20" FontWeight="Bold"/>
         <Label Height="Auto" Width="Auto" Content="{Binding ArrivalDateTimeStr}" HorizontalAlignment="Left"
             VerticalAlignment="Top" Margin="98,8,0,0" FontSize="20" FontWeight="Bold" RenderTransformOrigin="0.478,1.038" />
-        <Border Grid.ColumnSpan="3" Margin="382,255,81,32.2" BorderThickness="1" BorderBrush="Gray">
-            <Grid>
+        <Border Margin="382,255,51,32.2" BorderThickness="1" BorderBrush="Gray">
+            <Grid Margin="0.2">
                 <Label Content="{Binding RateValue}" Margin="0,30,-0.4,0" x:Name="RateValueLbl" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="48" Width="Auto"/>
                 <Label Content="Da Pagare" HorizontalAlignment="Left" Margin="0,0,-0.4,0" VerticalAlignment="Top" Width="138" FontSize="20" Foreground="#FF4057D0"/>
             </Grid>
