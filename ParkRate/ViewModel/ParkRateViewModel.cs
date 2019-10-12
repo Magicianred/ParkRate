@@ -36,13 +36,11 @@ namespace ParkRate.ViewModel
         private List<RateExample> _exampleList;
         private bool _paySlackTime;
         private bool _payInAdvance;
-        private string _payEveryMinutesStr;
-        private string _payAmountPerHourStr;
-        private string _slackTimeStr;
         private int _payEveryMinutes;
         private decimal _payAmountPerHour;
         private int _slackTime;
         public string ConfigFilePath;
+        private string _payAmountPerHourStr;
 
         public ParkRateViewModel() : this(new ParkRateConfig())
         {}
@@ -60,7 +58,8 @@ namespace ParkRate.ViewModel
             _paySlackTime = config.PaySlackTime;
             _payInAdvance = config.PayInAdvance;
             _payEveryMinutes = config.PayEveryMinutes;
-            _payAmountPerHour = config.PayAmountPerHour;
+            _payAmountPerHour = StringToDecimal(config.PayAmountPerHour, _payAmountPerHour);
+            _payAmountPerHourStr = config.PayAmountPerHour;
             _slackTime = config.SlackTime;
 
             LeaveTimeStr = now.ToString(DateTimeParser.TimeFormat);
@@ -81,7 +80,7 @@ namespace ParkRate.ViewModel
             PaySlackTime = config.PaySlackTime;
             PayInAdvance = config.PayInAdvance;
             PayEveryMinutes = config.PayEveryMinutes;
-            PayAmountPerHour = config.PayAmountPerHour;
+            PayAmountPerHourStr = config.PayAmountPerHour;
             SlackTime = config.SlackTime;
             ArrivalTimeStr = ComputeArrivalTime(DateTime.Now);
         }
@@ -169,6 +168,22 @@ namespace ParkRate.ViewModel
                 UpdateUi();
                 return;
             }
+
+            if (args.PropertyName == nameof(PayAmountPerHourStr))
+            {
+                PayAmountPerHour = StringToDecimal(PayAmountPerHourStr, PayAmountPerHour);
+                return;
+            }
+        }
+
+        private decimal StringToDecimal(string value, decimal defaultValue)
+        {
+            if (Decimal.TryParse(value, out var decimalValue))
+            {
+                return decimalValue;
+            }
+
+            return defaultValue;
         }
 
         private void UpdateUi()
@@ -183,7 +198,7 @@ namespace ParkRate.ViewModel
             {
                 _config.SlackTime = SlackTime;
                 _config.PaySlackTime = PaySlackTime;
-                _config.PayAmountPerHour = PayAmountPerHour;
+                _config.PayAmountPerHour = PayAmountPerHourStr;
                 _config.PayEveryMinutes = PayEveryMinutes;
                 _config.PayInAdvance = PayInAdvance;
                _config.ToXml(ConfigFilePath);
@@ -376,9 +391,12 @@ namespace ParkRate.ViewModel
             get => _payAmountPerHour;
             set
             {
-                _payAmountPerHour = Math.Max(value, 0);
-                OnPropertyChanged(nameof(PayAmountPerHour));
-                OnPropertyChanged(RateOptionProperty);
+                var valueToAssign = Math.Max(value, 0);
+                if (valueToAssign != _payAmountPerHour)
+                {
+                    _payAmountPerHour = valueToAssign;
+                    OnPropertyChanged(nameof(PayAmountPerHour));
+                }
             }
         }
 
@@ -389,6 +407,17 @@ namespace ParkRate.ViewModel
             {
                 _slackTime = Math.Max(value, 0);
                 OnPropertyChanged(nameof(SlackTime));
+                OnPropertyChanged(RateOptionProperty);
+            }
+        }
+
+        public string PayAmountPerHourStr
+        {
+            get => _payAmountPerHourStr;
+            set
+            {
+                _payAmountPerHourStr = value;
+                OnPropertyChanged(nameof(PayAmountPerHourStr));
                 OnPropertyChanged(RateOptionProperty);
             }
         }

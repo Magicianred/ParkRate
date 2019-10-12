@@ -46,7 +46,7 @@
                 <CheckBox Content="Paga in anticipo" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" IsChecked="{Binding PayInAdvance}" Foreground="#FF4057D0"/>
                 <WrapPanel>
                     <Label Width ="150px" Content="Tariffa oraria" Foreground="#FF4057D0"></Label>
-                    <TextBox Width="50px" TextWrapping="Wrap" Text="{Binding PayAmountPerHour, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20" GotFocus="SelectOnFocus" GotMouseCapture="SelectOnFocus"/>
+                    <TextBox Width="50px" TextWrapping="Wrap" Text="{Binding PayAmountPerHourStr, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="ValidateContent" Height="20" GotFocus="SelectOnFocus" GotMouseCapture="SelectOnFocus"/>
                     <Label Content="euro"></Label>
                 </WrapPanel>
                 <WrapPanel>

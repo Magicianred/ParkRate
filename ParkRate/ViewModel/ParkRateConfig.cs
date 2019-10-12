@@ -10,14 +10,14 @@ namespace ParkRate.ViewModel
             PaySlackTime = true;
             PayInAdvance = true;
             PayEveryMinutes = 15;
-            PayAmountPerHour = 3;
+            PayAmountPerHour = "3";
             SlackTime = 90;
         }
 
         public bool PaySlackTime { get; set; }
         public bool PayInAdvance { get; set; }
         public int PayEveryMinutes { get; set; }
-        public decimal PayAmountPerHour { get; set; }
+        public string PayAmountPerHour { get; set; }
         public int SlackTime { get; set; }
 
         public static ParkRateConfig FromXml(string filePath)
