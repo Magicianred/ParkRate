@@ -82,7 +82,7 @@ namespace ParkRate.ViewModel
             PayEveryMinutes = config.PayEveryMinutes;
             PayAmountPerHourStr = config.PayAmountPerHour;
             SlackTime = config.SlackTime;
-            ArrivalTimeStr = ComputeArrivalTime(DateTime.Now);
+            ArrivalTimeStr = string.Empty;
         }
 
         private void ComputeExamples()
