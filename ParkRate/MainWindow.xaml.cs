@@ -54,5 +54,10 @@ namespace ParkRate
                 viewModel.UpdateWithConfig(ParkRateConfig.FromXml(viewModel.ConfigFilePath));
             }
         }
+
+        private void Close_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
